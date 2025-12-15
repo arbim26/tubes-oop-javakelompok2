@@ -10,10 +10,10 @@ public class Transaksi {
     private KategoriTransaksi kategori;
     private LocalDate tanggal;
 
-    public Transaksi(String deskripsi, double jumlah, KategoriTransaksi kategori, LocalDate tanggal) {
+    public Transaksi(String deskripsi, double jumlah, KategoriTransaksi gaji, LocalDate tanggal) {
         this.deskripsi = deskripsi;
         this.jumlah = jumlah;
-        this.kategori = kategori;
+        this.kategori = gaji;
         this.tanggal = tanggal;
     }
 
