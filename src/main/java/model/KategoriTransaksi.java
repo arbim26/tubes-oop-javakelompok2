@@ -1,19 +1,13 @@
 package model;
 
-public enum KategoriTransaksi implements Kategori {
-    // Pemasukan
-    GAJI("Gaji", true),
-    BONUS("Bonus", true),
-    INVESTASI("Investasi", true),
-    LAINNYA_PEMASUKAN("Lainnya (Pemasukan)", true),
+public enum KategoriTransaksi {
+    // Pemasukan (termasuk hutang masuk)
+    GAJI("Pemasukan", true),
+    PINJAMAN("Pinjaman", true),
     
-    // Pengeluaran
-    MAKANAN("Makanan", false),
-    TRANSPORTASI("Transportasi", false),
-    HIBURAN("Hiburan", false),
-    BELANJA("Belanja", false),
-    TAGIHAN("Tagihan", false),
-    LAINNYA_PENGELUARAN("Lainnya (Pengeluaran)", false);
+    // Pengeluaran (termasuk pelunasan)
+    PELUNASAN("Pelunasan Hutang", false),
+    LAINNYA_PENGELUARAN("Pengeluaran", false);
     
     private final String nama;
     private final boolean pemasukan;
@@ -23,14 +17,21 @@ public enum KategoriTransaksi implements Kategori {
         this.pemasukan = pemasukan;
     }
     
-    @Override
     public String getNama() {
         return nama;
     }
     
-    @Override
     public boolean isPemasukan() {
         return pemasukan;
+    }
+    
+    // Helper method untuk cek tipe khusus
+    public boolean isPinjaman() {
+        return this == PINJAMAN;
+    }
+    
+    public boolean isPelunasan() {
+        return this == PELUNASAN;
     }
     
     @Override
