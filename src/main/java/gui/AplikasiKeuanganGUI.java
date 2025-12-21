@@ -10,7 +10,13 @@ import java.util.List;
 import exception.NegativeAmountException;
 import model.*;
 
+/**
+ * Class GUI utama aplikasi keuangan.
+ * Mengatur input transaksi, tabel, saldo, dan laporan keuangan.
+ */
+
 public class AplikasiKeuanganGUI {
+    // Frame dan pengelola data
     private JFrame frame;
     private ManagerKeuangan manager;
     
@@ -24,12 +30,17 @@ public class AplikasiKeuanganGUI {
     private JTable tableTransaksi;
     private DefaultTableModel tableModel;
     private JButton btnHapusTerpilih, btnPilihSemua, btnBatalPilih;
+
     
+    /**
+     * Konstruktor GUI aplikasi keuangan.
+     */
     public AplikasiKeuanganGUI() {
         manager = new ManagerKeuangan();
         initialize();
     }
     
+    // Inisialisasi tampilan utama
     private void initialize() {
         frame = new JFrame("Aplikasi Keuangan - Saldo Aktual");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -49,6 +60,7 @@ public class AplikasiKeuanganGUI {
         updateInfo();
     }
     
+    // Panel input transaksi    
     private JPanel createTransaksiPanel() {
         JPanel panel = new JPanel(new BorderLayout(10, 10));
         panel.add(createInputPanel(), BorderLayout.WEST);
@@ -56,6 +68,7 @@ public class AplikasiKeuanganGUI {
         return panel;
     }
     
+    // Panel tabel transaksi
     private JPanel createInputPanel() {
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -171,6 +184,7 @@ public class AplikasiKeuanganGUI {
         return panel;
     }
     
+    // Panel laporan
     private JPanel createTablePanel() {
         JPanel panel = new JPanel(new BorderLayout(10, 10));
         
@@ -297,6 +311,8 @@ public class AplikasiKeuanganGUI {
         return panel;
     }
     
+    
+    // Panel bawah (saldo & hutang)
     private JPanel createLaporanPanel() {
         JPanel panel = new JPanel(new BorderLayout(10, 10));
         
@@ -329,6 +345,7 @@ public class AplikasiKeuanganGUI {
         return panel;
     }
     
+    // Menambahkan transaksi baru
     private JPanel createBottomPanel() {
         JPanel panel = new JPanel(new GridLayout(1, 2, 10, 0));
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -361,6 +378,7 @@ public class AplikasiKeuanganGUI {
         return panel;
     }
     
+     // Mengosongkan input form
     private void tambahTransaksi() throws NegativeAmountException {
         try {
             String deskripsi = tfDeskripsi.getText().trim();
@@ -393,6 +411,7 @@ public class AplikasiKeuanganGUI {
         }
     }
     
+    // Memperbarui isi tabel transaksi
     private void clearInput() {
         tfDeskripsi.setText("");
         tfJumlah.setText("");
@@ -401,6 +420,7 @@ public class AplikasiKeuanganGUI {
         cbKategori.setSelectedIndex(0);
     }
     
+     // Menghapus transaksi terpilih
     private void refreshTable() {
         tableModel.setRowCount(0);
         List<Transaksi> transaksiList = manager.getAllTransaksi();
@@ -423,6 +443,7 @@ public class AplikasiKeuanganGUI {
         btnHapusTerpilih.setEnabled(manager.adaTransaksiTerpilih());
     }
     
+    // Memperbarui informasi saldo dan hutang
     private void hapusTransaksiTerpilih() {
         if (!manager.adaTransaksiTerpilih()) {
             JOptionPane.showMessageDialog(frame, "Tidak ada transaksi yang dipilih!");
@@ -441,6 +462,7 @@ public class AplikasiKeuanganGUI {
         }
     }
     
+    // Laporan lengkap
     private void updateInfo() {
         double saldo = manager.hitungSaldo();
         double sisaHutang = manager.hitungSisaHutang();
@@ -464,6 +486,7 @@ public class AplikasiKeuanganGUI {
         }
     }
     
+    // Laporan pemasukan
     private void generateLaporanLengkap() {
         StringBuilder sb = new StringBuilder();
         String[] ringkasan = manager.generateLaporanRingkasan();
@@ -480,6 +503,7 @@ public class AplikasiKeuanganGUI {
         taLaporan.setText(sb.toString());
     }
     
+     // Laporan pengeluaran
     private void generateLaporanPemasukan() {
         StringBuilder sb = new StringBuilder();
         List<Transaksi> pemasukanList = manager.getTransaksiPemasukan();
@@ -504,6 +528,7 @@ public class AplikasiKeuanganGUI {
         taLaporan.setText(sb.toString());
     }
     
+     // Laporan hutang
     private void generateLaporanPengeluaran() {
         StringBuilder sb = new StringBuilder();
         List<Transaksi> pengeluaranList = manager.getTransaksiPengeluaran();
@@ -577,8 +602,5 @@ public class AplikasiKeuanganGUI {
         
         taLaporan.setText(sb.toString());
     }
-    
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new AplikasiKeuanganGUI());
-    }
+
 }
